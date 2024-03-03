@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ButtonBase from '../../components/buttonBase/buttonBase';
 import Dropdown from '../../components/dropdown/dropdown';
@@ -6,23 +7,29 @@ import { OptionLabel, OptionPageWrap, OptionSection } from './style';
 
 const OptionPage = () => {
   const navigate = useNavigate();
+  const optionData = useSelector((state: StoreType) => state.gameOptionReducer);
 
   return (
     <OptionPageWrap>
       <OptionSection>
         <OptionLabel>게임판 크기</OptionLabel>
-        <Dropdown defaultData={boardSize[0].condition} data={boardSize} />
+        <Dropdown selectOption={optionData.gameSizeValue} data={boardSize} dataName="boardSize" />
         <OptionLabel>승리 조건</OptionLabel>
-        <Dropdown defaultData={winnerConditions[0].condition} data={winnerConditions} />
+        <Dropdown
+          selectOption={optionData.gameWinnerValue}
+          data={winnerConditions}
+          dataName="winnerConditions"
+        />
       </OptionSection>
 
       <OptionSection>
         <OptionLabel>첫 번째 플레이어</OptionLabel>
-        <Dropdown defaultData={userMark[0].condition} data={userMark} />
-        <Dropdown defaultData={userMarkColor[0].condition} data={userMarkColor} />
+        <Dropdown data={userMark} dataName="userMark" />
+        <Dropdown data={userMarkColor} dataName="userMarkColor" />
+
         <OptionLabel>두 번째 플레이어</OptionLabel>
-        <Dropdown defaultData={userMark[1].condition} data={userMark} />
-        <Dropdown defaultData={userMarkColor[1].condition} data={userMarkColor} />
+        <Dropdown data={userMark} dataName="userMark" />
+        <Dropdown data={userMarkColor} dataName="userMarkColor" />
       </OptionSection>
 
       <div style={{ marginTop: '50px' }} />
