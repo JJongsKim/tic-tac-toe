@@ -7,16 +7,18 @@ import { OptionLabel, OptionPageWrap, OptionSection } from './style';
 
 const OptionPage = () => {
   const navigate = useNavigate();
-  const optionData = useSelector((state: StoreType) => state.gameOptionReducer);
+  const { gameSizeValue, gameWinnerValue, user1Value, user2Value } = useSelector(
+    (state: StoreType) => state.gameOptionReducer,
+  );
 
   return (
     <OptionPageWrap>
       <OptionSection>
         <OptionLabel>게임판 크기</OptionLabel>
-        <Dropdown selectOption={optionData.gameSizeValue} data={boardSize} dataName="boardSize" />
+        <Dropdown selectOption={gameSizeValue} data={boardSize} dataName="boardSize" />
         <OptionLabel>승리 조건</OptionLabel>
         <Dropdown
-          selectOption={optionData.gameWinnerValue}
+          selectOption={gameWinnerValue}
           data={winnerConditions}
           dataName="winnerConditions"
         />
@@ -24,12 +26,32 @@ const OptionPage = () => {
 
       <OptionSection>
         <OptionLabel>첫 번째 플레이어</OptionLabel>
-        <Dropdown data={userMark} dataName="userMark" />
-        <Dropdown data={userMarkColor} dataName="userMarkColor" />
+        <Dropdown
+          userType="user1"
+          selectOption={user1Value.mark}
+          data={userMark}
+          dataName="userMark"
+        />
+        <Dropdown
+          userType="user1"
+          selectOption={user1Value.markColor}
+          data={userMarkColor}
+          dataName="userMarkColor"
+        />
 
         <OptionLabel>두 번째 플레이어</OptionLabel>
-        <Dropdown data={userMark} dataName="userMark" />
-        <Dropdown data={userMarkColor} dataName="userMarkColor" />
+        <Dropdown
+          userType="user2"
+          selectOption={user2Value.mark}
+          data={userMark}
+          dataName="userMark"
+        />
+        <Dropdown
+          userType="user2"
+          selectOption={user2Value.markColor}
+          data={userMarkColor}
+          dataName="userMarkColor"
+        />
       </OptionSection>
 
       <div style={{ marginTop: '50px' }} />

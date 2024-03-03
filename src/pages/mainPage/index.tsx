@@ -1,5 +1,7 @@
+import { MainPageWrap } from './style';
+
 const MainPage = () => {
-  return <div>게임 메인 페이지</div>;
+  return <MainPageWrap>게임 메인 페이지</MainPageWrap>;
 };
 
 export default MainPage;

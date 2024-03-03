@@ -2,7 +2,12 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import dropdown from '../../assets/dropdown.svg';
 
-import { setChangeGameSize, setChangeGameWinner } from '../../store/reducers/gameOptionReducer';
+import {
+  setChangeGameSize,
+  setChangeGameWinner,
+  setChangeUserMark,
+  setChangeUserMarkColor,
+} from '../../store/reducers/gameOptionReducer';
 import {
   DropdownButtonImg,
   DropdownButtonWrap,
@@ -14,13 +19,14 @@ import {
 
 interface DropdownProps {
   selectOption?: string;
+  userType?: string;
   dataName: string;
   data: Array<{
     [key: string]: string;
   }>;
 }
 
-const Dropdown = ({ selectOption, dataName, data }: DropdownProps) => {
+const Dropdown = ({ selectOption, userType, dataName, data }: DropdownProps) => {
   const dispatch = useDispatch();
 
   const [clicked, isClicked] = useState(false);
@@ -33,12 +39,21 @@ const Dropdown = ({ selectOption, dataName, data }: DropdownProps) => {
       case 'boardSize':
         dispatch(setChangeGameSize(value));
         break;
+
       case 'winnerConditions':
         dispatch(setChangeGameWinner(value));
         break;
+
       case 'userMark':
+        if (userType !== undefined) {
+          dispatch(setChangeUserMark({ user: userType, mark: value }));
+        }
         break;
+
       case 'userMarkColor':
+        if (userType !== undefined) {
+          dispatch(setChangeUserMarkColor({ user: userType, markColor: value }));
+        }
         break;
     }
 
@@ -47,7 +62,7 @@ const Dropdown = ({ selectOption, dataName, data }: DropdownProps) => {
 
   return (
     <DropdownWrap>
-      <DropdownDefaultItem>{selectOption ? selectOption : 'ㅇㅇ'}</DropdownDefaultItem>
+      <DropdownDefaultItem>{selectOption}</DropdownDefaultItem>
       <DropdownButtonWrap onClick={handleClickButton}>
         <DropdownButtonImg src={dropdown} alt="버튼" $clicked={clicked} />
       </DropdownButtonWrap>

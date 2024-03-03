@@ -26,19 +26,19 @@ export const winnerConditions = [
 export const userMark = [
   {
     type: '1',
-    condition: '동그라미',
+    condition: '⃝',
   },
   {
     type: '2',
-    condition: '엑스',
+    condition: 'Ｘ',
   },
   {
     type: '3',
-    condition: '세모',
+    condition: '△',
   },
   {
     type: '4',
-    condition: '네모',
+    condition: '☐',
   },
 ];
 
