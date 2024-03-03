@@ -11,6 +11,13 @@ const OptionPage = () => {
     (state: StoreType) => state.gameOptionReducer,
   );
 
+  const filterdUserMark = userMark.filter(
+    item => item.condition !== user1Value.mark && item.condition !== user2Value.mark,
+  );
+  const filteredUserMarkColor = userMarkColor.filter(
+    item => item.condition !== user1Value.markColor && item.condition !== user2Value.markColor,
+  );
+
   return (
     <OptionPageWrap>
       <OptionSection>
@@ -29,13 +36,13 @@ const OptionPage = () => {
         <Dropdown
           userType="user1"
           selectOption={user1Value.mark}
-          data={userMark}
+          data={filterdUserMark}
           dataName="userMark"
         />
         <Dropdown
           userType="user1"
           selectOption={user1Value.markColor}
-          data={userMarkColor}
+          data={filteredUserMarkColor}
           dataName="userMarkColor"
         />
 
@@ -43,13 +50,13 @@ const OptionPage = () => {
         <Dropdown
           userType="user2"
           selectOption={user2Value.mark}
-          data={userMark}
+          data={filterdUserMark}
           dataName="userMark"
         />
         <Dropdown
           userType="user2"
           selectOption={user2Value.markColor}
-          data={userMarkColor}
+          data={filteredUserMarkColor}
           dataName="userMarkColor"
         />
       </OptionSection>
