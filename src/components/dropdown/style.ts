@@ -15,8 +15,6 @@ const DropdownWrap = styled.div`
     width: 20%;
     padding: 0 4px;
   }
-
-  z-index: 2;
 `;
 
 const DropdownButtonWrap = styled.div`
