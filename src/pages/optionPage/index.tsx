@@ -26,7 +26,7 @@ const OptionPage = () => {
       </OptionSection>
 
       <div style={{ marginTop: '50px' }} />
-      <ButtonBase onClick={() => navigate('/main')}>게임 시작</ButtonBase>
+      <ButtonBase onClick={() => navigate('/main')}>시작하기</ButtonBase>
     </OptionPageWrap>
   );
 };

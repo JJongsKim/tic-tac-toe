@@ -21,7 +21,7 @@ const OptionSection = styled.section`
   align-items: center;
   width: 100%;
 
-  margin: 45px 0;
+  margin: 60px 0;
 
   @media (max-width: 768px) {
     flex-direction: column;
