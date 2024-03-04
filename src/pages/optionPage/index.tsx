@@ -2,12 +2,18 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ButtonBase from '../../components/buttonBase/buttonBase';
 import Dropdown from '../../components/dropdown/dropdown';
-import { boardSize, userMark, userMarkColor, winnerConditions } from '../../utils/mock';
+import {
+  boardSize,
+  firstAttackUsers,
+  userMark,
+  userMarkColor,
+  winnerConditions,
+} from '../../utils/mock';
 import { OptionLabel, OptionPageWrap, OptionSection } from './style';
 
 const OptionPage = () => {
   const navigate = useNavigate();
-  const { gameSizeValue, gameWinnerValue, user1Value, user2Value } = useSelector(
+  const { gameSizeValue, gameWinnerValue, firstAttackUser, user1Value, user2Value } = useSelector(
     (state: StoreType) => state.gameOptionReducer,
   );
 
@@ -29,10 +35,16 @@ const OptionPage = () => {
           data={winnerConditions}
           dataName="winnerConditions"
         />
+        <OptionLabel>선공</OptionLabel>
+        <Dropdown
+          selectOption={firstAttackUser}
+          data={firstAttackUsers}
+          dataName="firstAttackUsers"
+        />
       </OptionSection>
 
       <OptionSection>
-        <OptionLabel>첫 번째 플레이어</OptionLabel>
+        <OptionLabel>첫 번째 유저</OptionLabel>
         <Dropdown
           userType="user1"
           selectOption={user1Value.mark}
@@ -46,7 +58,7 @@ const OptionPage = () => {
           dataName="userMarkColor"
         />
 
-        <OptionLabel>두 번째 플레이어</OptionLabel>
+        <OptionLabel>두 번째 유저</OptionLabel>
         <Dropdown
           userType="user2"
           selectOption={user2Value.mark}

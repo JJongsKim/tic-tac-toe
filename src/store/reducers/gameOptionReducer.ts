@@ -4,6 +4,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState: StoreType['gameOptionReducer'] = {
   gameSizeValue: '3X3',
   gameWinnerValue: '3',
+  firstAttackUser: '첫 번째 유저',
   user1Value: {
     mark: 'Ｘ',
     markColor: '파랑',
@@ -26,6 +27,11 @@ const gameOptionReducer = createSlice({
     /* 📌 게임 승리 조건 변경 */
     setChangeGameWinner: (state, action: PayloadAction<string>) => {
       state.gameWinnerValue = action.payload;
+    },
+
+    /* 📌 게임 선공 플레이어 변경 */
+    setChangeAttackUser: (state, action: PayloadAction<string>) => {
+      state.firstAttackUser = action.payload;
     },
 
     /* 📌 플레이어별 선택한 마크 변경 */
@@ -52,7 +58,12 @@ const gameOptionReducer = createSlice({
   },
 });
 
-export const { setChangeGameSize, setChangeGameWinner, setChangeUserMark, setChangeUserMarkColor } =
-  gameOptionReducer.actions;
+export const {
+  setChangeGameSize,
+  setChangeGameWinner,
+  setChangeAttackUser,
+  setChangeUserMark,
+  setChangeUserMarkColor,
+} = gameOptionReducer.actions;
 
 export default gameOptionReducer.reducer;

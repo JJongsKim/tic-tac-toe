@@ -5,21 +5,21 @@ const DropdownWrap = styled.div`
   display: flex;
   align-items: center;
 
-  width: 14%;
-  height: 27px;
-  padding: 0 6px;
+  width: 16%;
+  height: 32px;
+  padding: 0 10px;
   border: 1px solid #ccc;
   background-color: white;
 
   @media (max-width: 768px) {
     width: 20%;
-    padding: 0 4px;
+    padding: 0 6px;
   }
 `;
 
 const DropdownButtonWrap = styled.div`
   position: absolute;
-  right: 6px;
+  right: 3px;
   cursor: pointer;
 `;
 

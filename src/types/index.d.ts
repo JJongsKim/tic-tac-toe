@@ -2,6 +2,7 @@ interface StoreType {
   gameOptionReducer: {
     gameSizeValue: string;
     gameWinnerValue: string;
+    firstAttackUser: string;
     user1Value: UserValueType;
     user2Value: UserValueType;
   };

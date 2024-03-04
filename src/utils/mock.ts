@@ -23,6 +23,17 @@ export const winnerConditions = [
   },
 ];
 
+export const firstAttackUsers = [
+  {
+    type: '1',
+    condition: '첫 번째 유저',
+  },
+  {
+    type: '2',
+    condition: '두 번째 유저',
+  },
+];
+
 export const userMark = [
   {
     type: '1',

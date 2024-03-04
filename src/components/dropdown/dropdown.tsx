@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import dropdown from '../../assets/dropdown.svg';
 
 import {
+  setChangeAttackUser,
   setChangeGameSize,
   setChangeGameWinner,
   setChangeUserMark,
@@ -42,6 +43,10 @@ const Dropdown = ({ selectOption, userType, dataName, data }: DropdownProps) => 
 
       case 'winnerConditions':
         dispatch(setChangeGameWinner(value));
+        break;
+
+      case 'firstAttackUsers':
+        dispatch(setChangeAttackUser(value));
         break;
 
       case 'userMark':
