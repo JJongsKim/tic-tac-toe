@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import ButtonBase from '../../components/buttonBase/buttonBase';
-import Dropdown from '../../components/dropdown/dropdown';
+import ButtonBase from '../../components/buttonBase';
+import Dropdown from '../../components/dropdown';
 import {
   boardSize,
   firstAttackUsers,

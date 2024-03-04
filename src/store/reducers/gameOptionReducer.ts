@@ -4,14 +4,18 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState: StoreType['gameOptionReducer'] = {
   gameSizeValue: '3X3',
   gameWinnerValue: '3',
-  firstAttackUser: '첫 번째 유저',
+  firstAttackUser: Math.random() < 0.5 ? '첫 번째 유저' : '두 번째 유저',
   user1Value: {
+    type: '첫 번째 유저',
     mark: 'Ｘ',
     markColor: '파랑',
+    undoCount: 3,
   },
   user2Value: {
+    type: '두 번째 유저',
     mark: '⃝',
     markColor: '빨강',
+    undoCount: 3,
   },
 };
 
@@ -55,6 +59,16 @@ const gameOptionReducer = createSlice({
         state.user2Value.markColor = markColor;
       }
     },
+
+    /* 📌 플레이어별 무르기 횟수 */
+    setReduceUndoCount: (state, action: PayloadAction<string>) => {
+      if (action.payload === '첫 번째 유저') {
+        state.user1Value.undoCount -= 1;
+      }
+      if (action.payload === '두 번째 유저') {
+        state.user1Value.undoCount -= 1;
+      }
+    },
   },
 });
 
@@ -64,6 +78,7 @@ export const {
   setChangeAttackUser,
   setChangeUserMark,
   setChangeUserMarkColor,
+  setReduceUndoCount,
 } = gameOptionReducer.actions;
 
 export default gameOptionReducer.reducer;

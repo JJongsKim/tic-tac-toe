@@ -9,8 +9,10 @@ interface StoreType {
 }
 
 interface UserValueType {
+  type: string;
   mark: string;
   markColor: string;
+  undoCount: number;
 }
 
 interface UserMarkActionType {

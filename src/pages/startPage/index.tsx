@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import ButtonBase from '../../components/buttonBase/buttonBase';
+import ButtonBase from '../../components/buttonBase';
 
 import { StartPageTitle, StartPageWrap } from './style';
 

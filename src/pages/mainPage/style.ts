@@ -11,7 +11,7 @@ const UserInfoWrap = styled.div`
     padding: 5px 0;
   }
   p:nth-child(1) {
-    margin: 20px 0;
+    margin-bottom: 15px;
     font-weight: bold;
   }
 `;
