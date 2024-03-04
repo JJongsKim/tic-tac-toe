@@ -66,7 +66,7 @@ const gameOptionReducer = createSlice({
         state.user1Value.undoCount -= 1;
       }
       if (action.payload === '두 번째 유저') {
-        state.user1Value.undoCount -= 1;
+        state.user2Value.undoCount -= 1;
       }
     },
   },

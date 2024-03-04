@@ -31,6 +31,7 @@ const GameBoard = ({ boardSize, user, user1Value, user2Value }: GameBoardProps) 
     ),
   );
   const [timer, setTimer] = useState(15);
+  const [selectedCells, setSelectedCells] = useState<{ row: number; col: number }[]>([]);
 
   const handleClickCell = (row: number, col: number) => {
     if (!winner) {
@@ -46,15 +47,26 @@ const GameBoard = ({ boardSize, user, user1Value, user2Value }: GameBoardProps) 
         setGameBoard(updatedGameBoard);
         calculateWinner();
         setCurrentUser(prevUser => (prevUser === '첫 번째 유저' ? '두 번째 유저' : '첫 번째 유저'));
+        setSelectedCells(prevSelectedCells => [...prevSelectedCells, { row, col }]);
         setTimer(15);
       }
     }
   };
 
   const handleClickUndoButton = (user: string) => {
-    dispatch(setReduceUndoCount(user));
-    setCurrentUser(prevUser => (prevUser === '첫 번째 유저' ? '두 번째 유저' : '첫 번째 유저'));
-    setTimer(15);
+    if (user1Value.undoCount >= 1 || user2Value.undoCount >= 1) {
+      dispatch(setReduceUndoCount(user));
+      const lastData = selectedCells.pop(); // 가장 마지막 요소 뽑아내기
+
+      if (lastData) {
+        const { row, col } = lastData;
+        const updatedGameBoard = [...gameBoard];
+        updatedGameBoard[row][col] = (row * boardSize + col).toString(); // 다시 숫자로 돌려놓기
+        setGameBoard(updatedGameBoard);
+      }
+      setCurrentUser(prevUser => (prevUser === '첫 번째 유저' ? '두 번째 유저' : '첫 번째 유저'));
+      setTimer(15);
+    }
   };
 
   const calculateWinner = () => {
@@ -99,15 +111,19 @@ const GameBoard = ({ boardSize, user, user1Value, user2Value }: GameBoardProps) 
       </BoardOptionWrap>
 
       <div>
-        {gameBoard.map((row, idx) => (
-          <BoardRowWrap key={idx}>
-            {row.map((cell, colIdx) => (
-              <BoardColWrap key={colIdx} onClick={() => handleClickCell(idx, colIdx)}>
-                {cell}
-              </BoardColWrap>
-            ))}
-          </BoardRowWrap>
-        ))}
+        {gameBoard.map((row, idx) => {
+          // const color =
+          //   currentUser === user1Value.type ? user1Value.markColor : user2Value.markColor;
+          return (
+            <BoardRowWrap key={idx}>
+              {row.map((cell, colIdx) => (
+                <BoardColWrap key={colIdx} onClick={() => handleClickCell(idx, colIdx)}>
+                  {cell}
+                </BoardColWrap>
+              ))}
+            </BoardRowWrap>
+          );
+        })}
 
         <UndoButton onClick={() => handleClickUndoButton(currentUser)}>무르기</UndoButton>
       </div>
