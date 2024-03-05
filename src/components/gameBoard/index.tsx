@@ -9,6 +9,7 @@ import {
   BoardRowWrap,
   GameBoardWrap,
   UndoButton,
+  WinnerWrap,
 } from './style';
 
 interface GameBoardProps {
@@ -133,14 +134,18 @@ const GameBoard = ({ boardSize, user, user1Value, user2Value }: GameBoardProps) 
 
   return (
     <GameBoardWrap>
-      <BoardOptionWrap>
-        <BoardOption>
-          <span>현재 순서:</span> {currentUser}
-        </BoardOption>
-        <BoardOption>
-          <span>시간:</span> {timer}
-        </BoardOption>
-      </BoardOptionWrap>
+      {winner ? (
+        <WinnerWrap>🎉 {winner} 🎉</WinnerWrap>
+      ) : (
+        <BoardOptionWrap>
+          <BoardOption>
+            <span>현재 순서:</span> {currentUser}
+          </BoardOption>
+          <BoardOption>
+            <span>시간:</span> {timer}
+          </BoardOption>
+        </BoardOptionWrap>
+      )}
 
       <div>
         {gameBoard.map((row, idx) => (
@@ -159,7 +164,9 @@ const GameBoard = ({ boardSize, user, user1Value, user2Value }: GameBoardProps) 
           </BoardRowWrap>
         ))}
 
-        <UndoButton onClick={() => handleClickUndoButton(currentUser)}>무르기</UndoButton>
+        <UndoButton onClick={() => handleClickUndoButton(currentUser)} disabled={Boolean(winner)}>
+          무르기
+        </UndoButton>
       </div>
     </GameBoardWrap>
   );

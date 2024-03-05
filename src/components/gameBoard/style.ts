@@ -34,21 +34,45 @@ const BoardColWrap = styled.button<{
   justify-content: center;
   align-items: center;
 
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   margin: 2px;
   font-weight: bold;
+  font-size: 1.4rem;
   border-radius: 10px;
   color: white;
   background-color: ${props => getColorByMarkColor(props.$color)};
+
+  @media (max-width: 768px) {
+    width: 60px;
+    height: 60px;
+  }
 `;
 
 const UndoButton = styled.button`
   width: 100%;
-  height: 30px;
+  height: 40px;
   margin-top: 10px;
   border: 1px solid #ccc;
   border-radius: 10px;
+
+  @media (max-width: 768px) {
+    height: 30px;
+  }
 `;
 
-export { GameBoardWrap, BoardOptionWrap, BoardOption, BoardRowWrap, BoardColWrap, UndoButton };
+const WinnerWrap = styled.p`
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding: 5px 0;
+`;
+
+export {
+  GameBoardWrap,
+  BoardOptionWrap,
+  BoardOption,
+  BoardRowWrap,
+  BoardColWrap,
+  UndoButton,
+  WinnerWrap,
+};
