@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import useGetWinningLines from '../../hooks/useGetWinningLines';
 import { setReduceUndoCount } from '../../store/reducers/gameOptionReducer';
 import {
@@ -7,6 +8,8 @@ import {
   BoardOption,
   BoardOptionWrap,
   BoardRowWrap,
+  EndOption,
+  EndOptionWrap,
   GameBoardWrap,
   UndoButton,
   WinnerWrap,
@@ -21,6 +24,7 @@ interface GameBoardProps {
 
 const GameBoard = ({ boardSize, user, user1Value, user2Value }: GameBoardProps) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const winningLines = useGetWinningLines(boardSize);
 
   const [winner, setWinner] = useState<string | null>(null);
@@ -167,6 +171,12 @@ const GameBoard = ({ boardSize, user, user1Value, user2Value }: GameBoardProps) 
         <UndoButton onClick={() => handleClickUndoButton(currentUser)} disabled={Boolean(winner)}>
           무르기
         </UndoButton>
+        {winner && (
+          <EndOptionWrap>
+            <EndOption onClick={() => navigate('/')}>홈으로 돌아가기</EndOption>
+            <EndOption>기록 저장하기</EndOption>
+          </EndOptionWrap>
+        )}
       </div>
     </GameBoardWrap>
   );

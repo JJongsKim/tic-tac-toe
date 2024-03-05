@@ -52,7 +52,7 @@ const BoardColWrap = styled.button<{
 const UndoButton = styled.button`
   width: 100%;
   height: 40px;
-  margin-top: 10px;
+  margin: 10px 0;
   border: 1px solid #ccc;
   border-radius: 10px;
 
@@ -67,6 +67,25 @@ const WinnerWrap = styled.p`
   padding: 5px 0;
 `;
 
+const EndOptionWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const EndOption = styled.button`
+  width: 46%;
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 0.8rem;
+
+  @media (max-width: 768px) {
+    width: 48%;
+    height: 30px;
+  }
+`;
+
 export {
   GameBoardWrap,
   BoardOptionWrap,
@@ -75,4 +94,6 @@ export {
   BoardColWrap,
   UndoButton,
   WinnerWrap,
+  EndOptionWrap,
+  EndOption,
 };
