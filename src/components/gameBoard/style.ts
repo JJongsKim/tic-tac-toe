@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import getColorByMarkColor from '../../utils/getColorByMarkColor';
 
 const GameBoardWrap = styled.div`
   display: flex;
@@ -26,7 +27,9 @@ const BoardRowWrap = styled.div`
   display: flex;
 `;
 
-const BoardColWrap = styled.div`
+const BoardColWrap = styled.button<{
+  $color: string;
+}>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,10 +37,10 @@ const BoardColWrap = styled.div`
   width: 60px;
   height: 60px;
   margin: 2px;
+  font-weight: bold;
   border-radius: 10px;
-  background-color: #ccc;
-
-  cursor: pointer;
+  color: white;
+  background-color: ${props => getColorByMarkColor(props.$color)};
 `;
 
 const UndoButton = styled.button`
