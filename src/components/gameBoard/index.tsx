@@ -27,7 +27,10 @@ const GameBoard = ({ boardSize, user, user1Value, user2Value }: GameBoardProps) 
   const [currentUser, setCurrentUser] = useState(user);
   const [gameBoard, setGameBoard] = useState(
     Array.from(Array(boardSize), (_, row) =>
-      Array.from(Array(boardSize), (_, col) => (row * boardSize + col).toString()),
+      Array.from(Array(boardSize), (_, col) => ({
+        value: (row * boardSize + col).toString(),
+        color: '#ccc',
+      })),
     ),
   );
   const [timer, setTimer] = useState(15);
@@ -39,10 +42,13 @@ const GameBoard = ({ boardSize, user, user1Value, user2Value }: GameBoardProps) 
       const updatedGameBoard = [...gameBoard];
 
       if (
-        updatedGameBoard[row][col] !== user1Value.mark &&
-        updatedGameBoard[row][col] !== user2Value.mark
+        updatedGameBoard[row][col].value !== user1Value.mark &&
+        updatedGameBoard[row][col].value !== user2Value.mark
       ) {
-        updatedGameBoard[row][col] = mark;
+        updatedGameBoard[row][col] = {
+          value: mark,
+          color: mark === user1Value.mark ? user1Value.markColor : user2Value.markColor,
+        };
 
         setGameBoard(updatedGameBoard);
         calculateWinner();
@@ -54,14 +60,17 @@ const GameBoard = ({ boardSize, user, user1Value, user2Value }: GameBoardProps) 
   };
 
   const handleClickUndoButton = (user: string) => {
-    if (user1Value.undoCount >= 1 || user2Value.undoCount >= 1) {
+    if (selectedCells.length > 0 && (user1Value.undoCount >= 1 || user2Value.undoCount >= 1)) {
       dispatch(setReduceUndoCount(user));
       const lastData = selectedCells.pop(); // 가장 마지막 요소 뽑아내기
 
       if (lastData) {
         const { row, col } = lastData;
         const updatedGameBoard = [...gameBoard];
-        updatedGameBoard[row][col] = (row * boardSize + col).toString(); // 다시 숫자로 돌려놓기
+        updatedGameBoard[row][col] = {
+          value: (row * boardSize + col).toString(),
+          color: '#ccc',
+        }; // 다시 원래대로(숫자 및 #ccc 색상으로) 돌려놓기
         setGameBoard(updatedGameBoard);
       }
       setCurrentUser(prevUser => (prevUser === '첫 번째 유저' ? '두 번째 유저' : '첫 번째 유저'));
@@ -72,9 +81,9 @@ const GameBoard = ({ boardSize, user, user1Value, user2Value }: GameBoardProps) 
   const calculateWinner = () => {
     for (let i = 0; i < winningLines.length; i++) {
       const [a, b, c] = winningLines[i];
-      const markA = gameBoard[Math.floor(a / boardSize)][a % boardSize];
-      const markB = gameBoard[Math.floor(b / boardSize)][b % boardSize];
-      const markC = gameBoard[Math.floor(c / boardSize)][c % boardSize];
+      const markA = gameBoard[Math.floor(a / boardSize)][a % boardSize].value;
+      const markB = gameBoard[Math.floor(b / boardSize)][b % boardSize].value;
+      const markC = gameBoard[Math.floor(c / boardSize)][c % boardSize].value;
 
       if (markA && markA === markB && markB === markC) {
         setWinner(markA === user1Value.mark ? user1Value.type : user2Value.type);
@@ -87,13 +96,32 @@ const GameBoard = ({ boardSize, user, user1Value, user2Value }: GameBoardProps) 
   useEffect(() => {
     let interval: NodeJS.Timer | number = 0;
 
-    if (winner) {
+    if (winner || selectedCells.length === boardSize ** 2) {
       return () => clearInterval(interval);
     }
     if (timer > 0) {
       interval = setInterval(() => {
         setTimer(prev => prev - 1);
       }, 1000);
+    } else if (timer === 0) {
+      // 타이머가 0초가 되었을 때, 선택되지 않은 셀들 추출하여 랜덤으로 선택하기
+      const emptyCells = gameBoard
+        .flatMap((row, idx) =>
+          row.map((cell, colIdx) => ({ row: idx, col: colIdx, value: cell.value })),
+        )
+        .filter(
+          cell =>
+            !selectedCells.some(
+              selectedCell => selectedCell.row === cell.row && selectedCell.col === cell.col,
+            ),
+        );
+
+      // 아직 선택되어 있지 않은 셀들이 남아있는 경우에만 실행!
+      if (emptyCells.length > 0) {
+        const randomIndex = Math.floor(Math.random() * emptyCells.length);
+        const randomCell = emptyCells[randomIndex];
+        handleClickCell(randomCell.row, randomCell.col);
+      }
     }
 
     return () => clearInterval(interval);
@@ -111,19 +139,21 @@ const GameBoard = ({ boardSize, user, user1Value, user2Value }: GameBoardProps) 
       </BoardOptionWrap>
 
       <div>
-        {gameBoard.map((row, idx) => {
-          // const color =
-          //   currentUser === user1Value.type ? user1Value.markColor : user2Value.markColor;
-          return (
-            <BoardRowWrap key={idx}>
-              {row.map((cell, colIdx) => (
-                <BoardColWrap key={colIdx} onClick={() => handleClickCell(idx, colIdx)}>
-                  {cell}
-                </BoardColWrap>
-              ))}
-            </BoardRowWrap>
-          );
-        })}
+        {gameBoard.map((row, idx) => (
+          <BoardRowWrap key={idx}>
+            {row.map((cell, colIdx) => (
+              <BoardColWrap
+                key={colIdx}
+                onClick={() => handleClickCell(idx, colIdx)}
+                $color={cell.color}
+              >
+                {selectedCells.some(cell => cell.row === idx && cell.col === colIdx)
+                  ? cell.value
+                  : ''}
+              </BoardColWrap>
+            ))}
+          </BoardRowWrap>
+        ))}
 
         <UndoButton onClick={() => handleClickUndoButton(currentUser)}>무르기</UndoButton>
       </div>
