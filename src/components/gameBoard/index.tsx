@@ -96,7 +96,11 @@ const GameBoard = ({ boardSize, user, user1Value, user2Value }: GameBoardProps) 
   useEffect(() => {
     let interval: NodeJS.Timer | number = 0;
 
-    if (winner || selectedCells.length === boardSize ** 2) {
+    if (winner) {
+      return () => clearInterval(interval);
+    }
+    if (!winner && selectedCells.length === boardSize ** 2) {
+      setWinner('무승부!!!');
       return () => clearInterval(interval);
     }
     if (timer > 0) {
