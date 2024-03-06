@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import useGetWinningLines from '../../hooks/useGetWinningLines';
@@ -105,8 +105,7 @@ const GameBoard = ({ boardSize, winnerValue, user, user1Value, user2Value }: Gam
     }
   };
 
-  const calculateWinner = () => {
-    // 입력된 승리 조건에 따라 승자 계산
+  const calculateWinner = useCallback(() => {
     for (let i = 0; i < winningLines.length; i++) {
       const line = winningLines[i];
       let isWinner = true;
@@ -136,7 +135,7 @@ const GameBoard = ({ boardSize, winnerValue, user, user1Value, user2Value }: Gam
         break;
       }
     }
-  };
+  }, [winnerValue]);
 
   const handleRecordGame = () => {
     alert('게임 기록이 저장되었어요!');
