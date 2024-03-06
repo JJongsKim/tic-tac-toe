@@ -216,7 +216,14 @@ const GameBoard = ({ boardSize, winnerValue, user, user1Value, user2Value }: Gam
           </BoardRowWrap>
         ))}
 
-        <UndoButton onClick={() => handleClickUndoButton(currentUser)} disabled={Boolean(winner)}>
+        <UndoButton
+          onClick={() => handleClickUndoButton(currentUser)}
+          disabled={
+            Boolean(winner) ||
+            (currentUser === '첫 번째 유저' && user1Value.undoCount <= 0) ||
+            (currentUser === '두 번째 유저' && user2Value.undoCount <= 0)
+          }
+        >
           무르기
         </UndoButton>
         {winner && (
