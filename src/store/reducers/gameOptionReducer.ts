@@ -13,7 +13,7 @@ const initialState: StoreType['gameOptionReducer'] = {
   },
   user2Value: {
     type: '두 번째 유저',
-    mark: '⃝',
+    mark: 'O',
     markColor: '빨강',
     undoCount: 3,
   },
