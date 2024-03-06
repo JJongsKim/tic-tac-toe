@@ -17,10 +17,6 @@ export const winnerConditions = [
     type: ' 3',
     condition: '5',
   },
-  {
-    type: '4',
-    condition: '6',
-  },
 ];
 
 export const firstAttackUsers = [

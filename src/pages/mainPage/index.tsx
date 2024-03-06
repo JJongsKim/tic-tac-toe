@@ -3,7 +3,7 @@ import GameBoard from '../../components/gameBoard';
 import { MainPageWrap, UserInfoWrap } from './style';
 
 const MainPage = () => {
-  const { gameSizeValue, firstAttackUser, user1Value, user2Value } = useSelector(
+  const { gameSizeValue, gameWinnerValue, firstAttackUser, user1Value, user2Value } = useSelector(
     (state: StoreType) => state.gameOptionReducer,
   );
 
@@ -27,6 +27,7 @@ const MainPage = () => {
       </div>
       <GameBoard
         boardSize={size}
+        winnerValue={gameWinnerValue}
         user={firstAttackUser}
         user1Value={user1Value}
         user2Value={user2Value}

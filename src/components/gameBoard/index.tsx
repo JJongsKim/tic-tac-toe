@@ -22,12 +22,13 @@ import {
 
 interface GameBoardProps {
   boardSize: number;
+  winnerValue: string;
   user: string;
   user1Value: UserValueType;
   user2Value: UserValueType;
 }
 
-const GameBoard = ({ boardSize, user, user1Value, user2Value }: GameBoardProps) => {
+const GameBoard = ({ boardSize, winnerValue, user, user1Value, user2Value }: GameBoardProps) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const winningLines = useGetWinningLines(boardSize);
@@ -94,14 +95,32 @@ const GameBoard = ({ boardSize, user, user1Value, user2Value }: GameBoardProps) 
   };
 
   const calculateWinner = () => {
+    // 입력된 승리 조건에 따라 승자 계산
     for (let i = 0; i < winningLines.length; i++) {
-      const [a, b, c] = winningLines[i];
-      const markA = gameBoard[Math.floor(a / boardSize)][a % boardSize].value;
-      const markB = gameBoard[Math.floor(b / boardSize)][b % boardSize].value;
-      const markC = gameBoard[Math.floor(c / boardSize)][c % boardSize].value;
+      const line = winningLines[i];
+      let isWinner = true;
 
-      if (markA && markA === markB && markB === markC) {
-        setWinner(markA === user1Value.mark ? user1Value.type : user2Value.type);
+      // 마크가 있는지, 모든 셀의 마크가 동일한지 판단
+      for (let j = 0; j < Number(winnerValue); j++) {
+        const index = line[j];
+        const mark = gameBoard[Math.floor(index / boardSize)][index % boardSize].value;
+
+        if (
+          !mark ||
+          mark !== gameBoard[Math.floor(line[0] / boardSize)][line[0] % boardSize].value
+        ) {
+          isWinner = false;
+          break;
+        }
+      }
+
+      if (isWinner) {
+        const winnerType =
+          gameBoard[Math.floor(line[0] / boardSize)][line[0] % boardSize].value === user1Value.mark
+            ? user1Value.type
+            : user2Value.type;
+
+        setWinner(winnerType);
         setTimer(0);
         break;
       }
