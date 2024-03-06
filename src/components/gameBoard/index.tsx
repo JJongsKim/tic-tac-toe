@@ -4,6 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import useGetWinningLines from '../../hooks/useGetWinningLines';
 import { setReduceUndoCount } from '../../store/reducers/gameOptionReducer';
 import {
+  setRecordGame,
+  setRecordLastGameBoard,
+  setRecordWinner,
+} from '../../store/reducers/gameRecordedReducer';
+import {
   BoardColWrap,
   BoardOption,
   BoardOptionWrap,
@@ -59,12 +64,16 @@ const GameBoard = ({ boardSize, user, user1Value, user2Value }: GameBoardProps) 
         calculateWinner();
         setCurrentUser(prevUser => (prevUser === '첫 번째 유저' ? '두 번째 유저' : '첫 번째 유저'));
         setSelectedCells(prevSelectedCells => [...prevSelectedCells, { row, col }]);
+        dispatch(setRecordGame({ type: 'click', mark, cell: { row, col } }));
+
         setTimer(15);
       }
     }
   };
 
   const handleClickUndoButton = (user: string) => {
+    const mark = currentUser === '첫 번째 유저' ? user1Value.mark : user2Value.mark;
+
     if (selectedCells.length > 0 && (user1Value.undoCount >= 1 || user2Value.undoCount >= 1)) {
       dispatch(setReduceUndoCount(user));
       const lastData = selectedCells.pop(); // 가장 마지막 요소 뽑아내기
@@ -77,6 +86,7 @@ const GameBoard = ({ boardSize, user, user1Value, user2Value }: GameBoardProps) 
           color: '#ccc',
         }; // 다시 원래대로(숫자 및 #ccc 색상으로) 돌려놓기
         setGameBoard(updatedGameBoard);
+        dispatch(setRecordGame({ type: 'undo', mark, cell: { row, col } }));
       }
       setCurrentUser(prevUser => (prevUser === '첫 번째 유저' ? '두 번째 유저' : '첫 번째 유저'));
       setTimer(15);
@@ -95,6 +105,14 @@ const GameBoard = ({ boardSize, user, user1Value, user2Value }: GameBoardProps) 
         setTimer(0);
         break;
       }
+    }
+  };
+
+  const handleRecordGame = () => {
+    dispatch(setRecordLastGameBoard({ gameBoard, selectedCells }));
+
+    if (winner !== null) {
+      dispatch(setRecordWinner(winner));
     }
   };
 
@@ -174,7 +192,7 @@ const GameBoard = ({ boardSize, user, user1Value, user2Value }: GameBoardProps) 
         {winner && (
           <EndOptionWrap>
             <EndOption onClick={() => navigate('/')}>홈으로 돌아가기</EndOption>
-            <EndOption>기록 저장하기</EndOption>
+            <EndOption onClick={handleRecordGame}>기록 저장하기</EndOption>
           </EndOptionWrap>
         )}
       </div>

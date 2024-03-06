@@ -1,7 +1,8 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ButtonBase from '../../components/buttonBase';
 import Dropdown from '../../components/dropdown';
+import { setResetRecordData } from '../../store/reducers/gameRecordedReducer';
 import {
   boardSize,
   firstAttackUsers,
@@ -13,6 +14,7 @@ import { OptionLabel, OptionPageWrap, OptionSection } from './style';
 
 const OptionPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { gameSizeValue, gameWinnerValue, firstAttackUser, user1Value, user2Value } = useSelector(
     (state: StoreType) => state.gameOptionReducer,
   );
@@ -23,6 +25,11 @@ const OptionPage = () => {
   const filteredUserMarkColor = userMarkColor.filter(
     item => item.condition !== user1Value.markColor && item.condition !== user2Value.markColor,
   );
+
+  const handleStartGame = () => {
+    dispatch(setResetRecordData());
+    navigate('/main');
+  };
 
   return (
     <OptionPageWrap>
@@ -74,7 +81,7 @@ const OptionPage = () => {
       </OptionSection>
 
       <div style={{ marginTop: '50px' }} />
-      <ButtonBase onClick={() => navigate('/main')}>시작하기</ButtonBase>
+      <ButtonBase onClick={handleStartGame}>시작하기</ButtonBase>
     </OptionPageWrap>
   );
 };
