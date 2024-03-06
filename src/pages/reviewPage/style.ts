@@ -31,4 +31,18 @@ const GameRecordDataList = styled.ul`
   }
 `;
 
-export { ReviewPageWrap, NoReviewContent, HomeButton, GameRecordDataWrap, GameRecordDataList };
+const MarkOrder = styled.div`
+  position: absolute;
+  right: 10px;
+  bottom: 5px;
+  font-size: 0.8rem;
+`;
+
+export {
+  ReviewPageWrap,
+  NoReviewContent,
+  HomeButton,
+  GameRecordDataWrap,
+  GameRecordDataList,
+  MarkOrder,
+};

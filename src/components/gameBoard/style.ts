@@ -30,6 +30,7 @@ const BoardRowWrap = styled.div`
 const BoardColWrap = styled.button<{
   $color: string;
 }>`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -9,7 +9,7 @@ interface StoreType {
   gameRecordedReducer: {
     selectedCells: { row: number; col: number }[];
     lastBoardData: { value: string; color: string }[][];
-    gameRecordData: { content: string }[];
+    gameRecordData: { type?: string; content: string }[];
   };
 }
 

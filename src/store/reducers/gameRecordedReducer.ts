@@ -24,11 +24,13 @@ const GameRecordedReducer = createSlice({
       const { type, mark, cell } = action.payload;
       if (type === 'click') {
         state.gameRecordData.push({
+          type: type,
           content: `${mark}가 [${cell.row}, ${cell.col}]을 선택했습니다.`,
         });
       }
       if (type === 'undo') {
         state.gameRecordData.push({
+          type: type,
           content: `${mark}가 [${cell.row}, ${cell.col}]을 물렀습니다.`,
         });
       }

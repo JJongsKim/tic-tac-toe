@@ -5,6 +5,7 @@ import {
   GameRecordDataList,
   GameRecordDataWrap,
   HomeButton,
+  MarkOrder,
   NoReviewContent,
   ReviewPageWrap,
 } from './style';
@@ -23,6 +24,38 @@ const ReviewPage = () => {
     (state: StoreType) => state.gameRecordedReducer,
   );
 
+  const selectedMark: { row: number; col: number; order: number }[] = []; // 마크가 몇 번째로 클릭되었는지 담을 배열
+
+  // gameRecordData의 content가 긴 문자열로 되어 있어 [row, col] 값을 구해야 함
+  const handleGetCell = (content: string) => {
+    const startIndex = content.indexOf('['),
+      endIndex = content.indexOf(']');
+    const coords = content
+      .substring(startIndex + 1, endIndex)
+      .split(',')
+      .map(coord => Number(coord.trim()));
+
+    return { row: coords[0], col: coords[1] };
+  };
+
+  gameRecordData.forEach((item, index) => {
+    const { type, content } = item;
+
+    if (type === 'click') {
+      const coords = handleGetCell(content);
+      selectedMark.push({ row: coords.row, col: coords.col, order: index + 1 });
+    } else if (type === 'undo') {
+      // 무르기를 한 경우 해당 셀은 배열에서 제거하기
+      const coords = handleGetCell(content);
+      const removeCell = selectedMark.findIndex(
+        cell => cell.row === coords.row && cell.col === coords.col,
+      );
+      if (removeCell !== -1) {
+        selectedMark.splice(removeCell, 1);
+      }
+    }
+  });
+
   return (
     <ReviewPageWrap>
       {selectedCells.length === 0 ? (
@@ -38,9 +71,19 @@ const ReviewPage = () => {
               <BoardRowWrap key={idx}>
                 {row.map((cell, colIdx) => (
                   <BoardColWrap key={colIdx} $color={cell.color}>
-                    {selectedCells.some(cell => cell.row === idx && cell.col === colIdx)
-                      ? cell.value
-                      : ''}
+                    {selectedCells.some(cell => cell.row === idx && cell.col === colIdx) ? (
+                      <>
+                        {cell.value}
+                        <MarkOrder>
+                          {
+                            selectedMark.find(mark => idx === mark.row && colIdx === mark.col)
+                              ?.order
+                          }
+                        </MarkOrder>
+                      </>
+                    ) : (
+                      ''
+                    )}
                   </BoardColWrap>
                 ))}
               </BoardRowWrap>
