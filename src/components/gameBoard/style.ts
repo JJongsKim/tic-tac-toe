@@ -63,6 +63,7 @@ const UndoButton = styled.button`
 `;
 
 const WinnerWrap = styled.p`
+  text-align: center;
   font-weight: bold;
   font-size: 1.2rem;
   padding: 5px 0;

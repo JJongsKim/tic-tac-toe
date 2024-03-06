@@ -22,9 +22,11 @@ const HomeButton = styled(UndoButton)`
 const GameRecordDataList = styled.ul`
   display: flex;
   flex-direction: column;
-  padding: 0 30px;
+  padding: 3px 30px;
   font-weight: 500;
   font-size: 0.9rem;
+  height: 35%;
+  overflow-y: scroll;
 
   li {
     margin-bottom: 12px;
