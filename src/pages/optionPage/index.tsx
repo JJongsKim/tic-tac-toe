@@ -12,6 +12,15 @@ import {
 } from '../../utils/mock';
 import { OptionLabel, OptionPageWrap, OptionSection } from './style';
 
+/*
+  👻 옵션 페이지
+  게임의 옵션을 설정한 후, 시작할 수 있다.
+
+  - 보드판 사이즈, 승리 조건 선택 가능
+  - 1번 플레이어와 2번 플레이어가 각각 선택한 마크와 색상을 제외하기 위해 filterd 배열을 만들어 컴포넌트에 전달
+  - 시작하기를 누르면 게임 메인 페이지로 이동
+*/
+
 const OptionPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();

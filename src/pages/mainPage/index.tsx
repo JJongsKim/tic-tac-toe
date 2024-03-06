@@ -2,6 +2,15 @@ import { useSelector } from 'react-redux';
 import GameBoard from '../../components/gameBoard';
 import { MainPageWrap, UserInfoWrap } from './style';
 
+/*
+  👻 게임 메인 페이지
+  선택한 옵션으로 게임을 시작한다.
+
+  - 첫 번째 유저의 마크와 색상 정보
+  - 두 번째 유저의 마크와 색상 정보
+  - 게임 보드판
+*/
+
 const MainPage = () => {
   const { gameSizeValue, gameWinnerValue, firstAttackUser, user1Value, user2Value } = useSelector(
     (state: StoreType) => state.gameOptionReducer,

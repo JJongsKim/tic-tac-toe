@@ -9,6 +9,14 @@ import {
   ReviewPageWrap,
 } from './style';
 
+/*
+  👻 기록된 게임 내용 조회페이지
+  바로 이전에 플레이한 게임의 내용을 조회할 수 있다.
+
+  - 홈으로 돌아가기가 가능하다.
+  - 이전에 플레이한 보드판과 게임의 진행 상황과 승자를 볼 수 있다.
+*/
+
 const ReviewPage = () => {
   const navigate = useNavigate();
   const { selectedCells, lastBoardData, gameRecordData } = useSelector(
