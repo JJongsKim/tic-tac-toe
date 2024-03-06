@@ -33,7 +33,7 @@ export const firstAttackUsers = [
 export const userMark = [
   {
     type: '1',
-    condition: '⃝',
+    condition: 'O',
   },
   {
     type: '2',
