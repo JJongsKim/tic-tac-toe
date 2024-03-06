@@ -139,6 +139,7 @@ const GameBoard = ({ boardSize, winnerValue, user, user1Value, user2Value }: Gam
   };
 
   const handleRecordGame = () => {
+    alert('게임 기록이 저장되었어요!');
     dispatch(setRecordLastGameBoard({ gameBoard, selectedCells }));
 
     if (winner !== null) {

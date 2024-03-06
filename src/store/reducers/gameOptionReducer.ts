@@ -69,6 +69,12 @@ const gameOptionReducer = createSlice({
         state.user2Value.undoCount -= 1;
       }
     },
+
+    /* 📌 게임시작 시 데이터 초기화 */
+    setResetUndoCount: state => {
+      state.user1Value.undoCount = 3;
+      state.user2Value.undoCount = 3;
+    },
   },
 });
 
@@ -79,6 +85,7 @@ export const {
   setChangeUserMark,
   setChangeUserMarkColor,
   setReduceUndoCount,
+  setResetUndoCount,
 } = gameOptionReducer.actions;
 
 export default gameOptionReducer.reducer;

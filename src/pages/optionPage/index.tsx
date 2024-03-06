@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ButtonBase from '../../components/buttonBase';
 import Dropdown from '../../components/dropdown';
+import { setResetUndoCount } from '../../store/reducers/gameOptionReducer';
 import { setResetRecordData } from '../../store/reducers/gameRecordedReducer';
 import {
   boardSize,
@@ -37,6 +38,7 @@ const OptionPage = () => {
 
   const handleStartGame = () => {
     dispatch(setResetRecordData());
+    dispatch(setResetUndoCount());
     navigate('/main');
   };
 
