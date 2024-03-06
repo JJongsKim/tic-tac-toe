@@ -6,6 +6,11 @@ interface StoreType {
     user1Value: UserValueType;
     user2Value: UserValueType;
   };
+  gameRecordedReducer: {
+    selectedCells: { row: number; col: number }[];
+    lastBoardData: { value: string; color: string }[][];
+    gameRecordData: { content: string }[];
+  };
 }
 
 interface UserValueType {
@@ -23,4 +28,15 @@ interface UserMarkActionType {
 interface UserMarkColorActionType {
   user: string;
   markColor: string;
+}
+
+interface GameRecordType {
+  type: 'click' | 'undo';
+  mark: string;
+  cell: { row: number; col: number };
+}
+
+interface LastBoardActionType {
+  gameBoard: StoreType['gameRecordedReducer']['lastBoardData'];
+  selectedCells: StoreType['gameRecordedReducer']['selectedCells'];
 }
