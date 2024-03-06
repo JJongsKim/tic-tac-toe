@@ -37,12 +37,12 @@ const OptionPage = () => {
   );
 
   const handleStartGame = () => {
-    if (Number(gameSizeValue.split('')[0]) > Number(gameWinnerValue)) {
+    if (Number(gameSizeValue.split('')[0]) >= Number(gameWinnerValue)) {
       dispatch(setResetRecordData());
       dispatch(setResetUndoCount());
       navigate('/main');
     } else {
-      alert('게임판의 크기보다 작은 승리 조건을 골라주세요.');
+      alert('게임판의 크기보다 같거나 작은 승리 조건을 골라주세요.');
     }
   };
 
